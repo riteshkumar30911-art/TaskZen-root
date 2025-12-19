@@ -1,6 +1,6 @@
 {
-  "name": "ProDo PWA",
-  "short_name": "ProDo",
+  "name": "task zone",
+  "short_name": "TaskZen",
   "description": "Advanced Progressive Web App To-Do List with offline capabilities and deadline notifications",
   "start_url": "./index.html",
   "display": "standalone",
