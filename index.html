@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productivity Pro | Advanced To-Do List</title>
+    <link rel="manifest" href="app.json">
+
+    <link rel="stylesheet" href="color.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📋</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header Section -->
+        <header class="app-header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-tasks"></i>
+                    <h1>TaskZen</h1>
+                </div>
+                <div class="header-actions">
+                    <div class="notification-container">
+                        <button class="notification-btn" id="notificationBtn" aria-label="Notifications">
+                            <i class="fas fa-bell"></i>
+                            <span class="notification-badge" id="notificationBadge">0</span>
+                        </button>
+                    </div>
+                    <div class="theme-toggle">
+                        <button id="themeToggle" aria-label="Toggle theme">
+                            <i class="fas fa-sun"></i>
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <p class="app-tagline">Your intelligent task management companion</p>
+        </header>
+
+        <!-- Notifications Panel -->
+        <div class="notifications-panel" id="notificationsPanel">
+            <div class="notifications-header">
+                <h3><i class="fas fa-bell"></i> Upcoming Deadlines</h3>
+                <button class="btn-close" id="closeNotificationsBtn" aria-label="Close notifications">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="notifications-list" id="notificationsList">
+                <div class="empty-notifications">
+                    <i class="fas fa-bell-slash"></i>
+                    <p>No upcoming deadlines</p>
+                </div>
+            </div>
+            <div class="notifications-settings">
+                <label class="settings-toggle">
+                    <input type="checkbox" id="notificationToggle" checked>
+                    <span class="toggle-slider"></span>
+                    <span>Enable notifications</span>
+                </label>
+                <button class="btn-secondary btn-sm" id="testNotificationBtn">
+                    <i class="fas fa-bell"></i> Test Notification
+                </button>
+            </div>
+        </div>
+
+        <main class="app-main">
+            <!-- Stats Section -->
+            <section class="stats-section">
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-list-check"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Total Tasks</h3>
+                            <p id="totalTasks">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Completed</h3>
+                            <p id="completedTasks">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-hourglass-half"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Pending</h3>
+                            <p id="pendingTasks">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Due Soon</h3>
+                            <p id="dueSoonTasks">0</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Progress Bar -->
+                <div class="progress-container">
+                    <div class="progress-header">
+                        <span>Your Progress</span>
+                        <span id="progressPercentage">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Focus Mode Section -->
+            <section class="focus-section" id="focusSection">
+                <div class="section-header">
+                    <h2><i class="fas fa-bullseye"></i> Daily Focus (Top 3 Priorities)</h2>
+                    <button class="btn-info" id="focusInfoBtn" aria-label="Focus mode information">
+                        <i class="fas fa-info-circle"></i>
+                    </button>
+                </div>
+                <div class="focus-tasks" id="focusTasks">
+                    <p class="empty-focus">Add high priority tasks to see them here</p>
+                </div>
+            </section>
+
+            <div class="app-content">
+                <!-- Task Input Section -->
+                <section class="input-section">
+                    <div class="input-card">
+                        <h2><i class="fas fa-plus-circle"></i> Add New Task</h2>
+                        <form id="taskForm">
+                            <div class="form-group">
+                                <input type="text" id="taskInput" placeholder="What needs to be done?" autocomplete="off" maxlength="100">
+                                <div class="input-underline"></div>
+                            </div>
+                            <div class="form-options">
+                                <div class="option-group">
+                                    <label for="prioritySelect"><i class="fas fa-flag"></i> Priority</label>
+                                    <select id="prioritySelect">
+                                        <option value="low">Low Priority</option>
+                                        <option value="medium" selected>Medium Priority</option>
+                                        <option value="high">High Priority</option>
+                                    </select>
+                                </div>
+                                <div class="option-group">
+                                    <label for="dueDate"><i class="fas fa-calendar-day"></i> Due Date</label>
+                                    <input type="date" id="dueDate" min="">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn-primary" id="addTaskBtn">
+                                <i class="fas fa-plus"></i> Add Task
+                            </button>
+                            <div class="form-validation" id="formValidation"></div>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- Filters & Search Section -->
+                <section class="controls-section">
+                    <div class="search-container">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="searchInput" placeholder="Search tasks..." autocomplete="off">
+                        </div>
+                        <div class="notification-alert" id="notificationAlert">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <span>You have <strong id="alertCount">0</strong> tasks due soon!</span>
+                        </div>
+                    </div>
+                    
+                    <div class="filters-container">
+                        <div class="filter-group">
+                            <label>Status:</label>
+                            <div class="filter-buttons">
+                                <button class="filter-btn active" data-filter="all">All</button>
+                                <button class="filter-btn" data-filter="pending">Pending</button>
+                                <button class="filter-btn" data-filter="completed">Completed</button>
+                            </div>
+                        </div>
+                        <div class="filter-group">
+                            <label>Priority:</label>
+                            <div class="filter-buttons">
+                                <button class="filter-btn active" data-priority="all">All</button>
+                                <button class="filter-btn" data-priority="high">
+                                    <span class="priority-indicator high"></span> High
+                                </button>
+                                <button class="filter-btn" data-priority="medium">
+                                    <span class="priority-indicator medium"></span> Medium
+                                </button>
+                                <button class="filter-btn" data-priority="low">
+                                    <span class="priority-indicator low"></span> Low
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Task List Section -->
+                <section class="tasks-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-list-ul"></i> Your Tasks</h2>
+                        <div class="section-actions">
+                            <button class="btn-secondary" id="dueSoonBtn">
+                                <i class="fas fa-clock"></i> Show Due Soon
+                            </button>
+                            <button class="btn-clear" id="clearCompletedBtn">
+                                <i class="fas fa-broom"></i> Clear Completed
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="tasks-container">
+                        <div class="tasks-list" id="tasksList">
+                            <div class="empty-state" id="emptyState">
+                                <div class="empty-icon">
+                                    <i class="fas fa-clipboard-list"></i>
+                                </div>
+                                <h3>No tasks yet</h3>
+                                <p>Add your first task using the form above</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <footer class="app-footer">
+            <p>TaskZen &copy; <span id="currentYear"></span> | Kashi Yadav</p>
+            <p class="footer-info">Tasks are saved in your browser's local storage</p>
+        </footer>
+    </div>
+
+    <!-- Edit Task Modal -->
+    <div class="modal-overlay" id="editModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-edit"></i> Edit Task</h2>
+                <button class="btn-close" id="closeModalBtn" aria-label="Close modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="editTaskForm">
+                <div class="form-group">
+                    <input type="text" id="editTaskInput" placeholder="Task description" autocomplete="off" maxlength="100">
+                    <div class="input-underline"></div>
+                </div>
+                <div class="form-options">
+                    <div class="option-group">
+                        <label for="editPrioritySelect"><i class="fas fa-flag"></i> Priority</label>
+                        <select id="editPrioritySelect">
+                            <option value="low">Low Priority</option>
+                            <option value="medium">Medium Priority</option>
+                            <option value="high">High Priority</option>
+                        </select>
+                    </div>
+                    <div class="option-group">
+                        <label for="editDueDate"><i class="fas fa-calendar-day"></i> Due Date</label>
+                        <input type="date" id="editDueDate">
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" id="cancelEditBtn">Cancel</button>
+                    <button type="submit" class="btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Focus Mode Info Modal -->
+    <div class="modal-overlay" id="infoModal">
+        <div class="modal-content info-modal">
+            <div class="modal-header">
+                <h2><i class="fas fa-info-circle"></i> About Focus Mode</h2>
+                <button class="btn-close" id="closeInfoModalBtn" aria-label="Close modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Focus Mode highlights your <strong>top 3 high priority tasks</strong> to help you concentrate on what matters most.</p>
+                <ul>
+                    <li><i class="fas fa-star"></i> Only <strong>high priority</strong> tasks appear here</li>
+                    <li><i class="fas fa-clock"></i> Tasks are sorted by due date (earliest first)</li>
+                    <li><i class="fas fa-bullseye"></i> Complete focus tasks to make room for others</li>
+                </ul>
+                <p class="tip"><strong>Tip:</strong> Mark tasks as high priority and set due dates to use Focus Mode effectively.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Sound (hidden audio element) -->
+    <audio id="notificationSound" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-alarm-digital-clock-beep-989.mp3" type="audio/mpeg">
+    </audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
